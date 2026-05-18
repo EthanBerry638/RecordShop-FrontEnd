@@ -2,9 +2,19 @@
 
 <h3>Record Details</h3>
 
-<RecordSummary Album="AlbumToUpdate"></RecordSummary>
+@if (AlbumToUpdate != null)
+{
+    <EditForm Model="AlbumToUpdate">
+        <div>
+            <label>
+                Title: 
+                <InputText @bind-Value="AlbumToUpdate.Title"/>
+            </label>
+        </div>
+    </EditForm>
+}
 
 @code {
     [Parameter]
-    public Album AlbumToUpdate { get; set; }
+    public Album? AlbumToUpdate { get; set; }
 }
