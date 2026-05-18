@@ -27,6 +27,13 @@
 
         <div>
             <label>
+                Release Date:
+                <InputDate @bind-Value="AlbumToUpdate.ReleaseDate" />
+            </label>
+        </div>
+
+        <div>
+            <label>
                 Price:
                 <InputNumber @bind-Value="AlbumToUpdate.Price" />
             </label>
@@ -46,6 +53,10 @@
         <li>Id: @updatedRecord.Id</li>
         <li>Title: @updatedRecord.Title</li>
         <li>Description: @updatedRecord.Description</li>
+        @if(updatedRecord.ReleaseDate != null)
+        {
+            <li>Release Date: @updatedRecord.ReleaseDate</li>
+        }
         <li>Price: £@updatedRecord.Price</li>
     </ul>
 }
@@ -65,6 +76,7 @@
                 Id = AlbumToUpdate.Id,
                 Title = AlbumToUpdate.Title,
                 Description = AlbumToUpdate.Description,
+                ReleaseDate = AlbumToUpdate.ReleaseDate,
                 Price = AlbumToUpdate.Price
             };
         }
