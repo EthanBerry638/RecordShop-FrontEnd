@@ -35,6 +35,16 @@
     </EditForm>
 }
 
+@if(updatedRecord != null)
+{
+    <ul>
+        <li>Id: @updatedRecord.Id</li>
+        <li>Title: @updatedRecord.Title</li>
+        <li>Description: @updatedRecord.Description</li>
+        <li>Price: @updatedRecord.Price</li>
+    </ul>
+}
+
 @code {
     [Parameter]
     public Album? AlbumToUpdate { get; set; }
@@ -45,7 +55,7 @@
     {
         if (AlbumToUpdate != null)
         {
-            updatedRecord = new Album
+            updatedRecord = new Album()
             {
                 Id = AlbumToUpdate.Id,
                 Title = AlbumToUpdate.Title,
