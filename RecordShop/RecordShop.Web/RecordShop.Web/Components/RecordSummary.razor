@@ -5,6 +5,10 @@
     <div class="card">
         <h4>@Album.Title</h4>
         <p>Description: @Album.Description</p>
+        @if (Album.ReleaseDate != null)
+        {
+            <p>Release Date: @Album.ReleaseDate</p>
+        }
         <p>Price: £@Album.Price</p>
     </div>
 }
