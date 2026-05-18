@@ -6,16 +6,3 @@
 <PageTitle>Home</PageTitle>
 
 <RecordsLoader></RecordsLoader>
-
-@* 
-@code {
-    private readonly static string _filePath = "Resources\\albums.json";
-    private List<Album> FeaturedAlbums { get; set; } = new();
-
-    protected override void OnInitialized()
-    {
-        string jsonText = System.IO.File.ReadAllText(_filePath);
-
-        FeaturedAlbums = JsonSerializer.Deserialize<List<Album>>(jsonText) ?? new();
-    }
-} *@
