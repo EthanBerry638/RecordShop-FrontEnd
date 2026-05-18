@@ -5,4 +5,14 @@
 
 <PageTitle>Home</PageTitle>
 
-<RecordDetails></RecordDetails>
+<RecordDetails AlbumToUpdate="testAlbum"></RecordDetails>
+
+@code {
+    private Album testAlbum = new Album
+    {
+        Id = 1,
+        Title = "test",
+        Description = "test",
+        Price = 20
+    };   
+}
