@@ -9,10 +9,20 @@
 {
     <p>Failed to load record data. Please try again later.</p>
 }
+else if (albums == null)
+{
+    <LoadingIndicator IsLoading="true"></LoadingIndicator>
+}
+else
+{
+    <RecordSummaryList Albums="@albums.ToList()"></RecordSummaryList>
+}
 
-@code {
+    @code {
     private IEnumerable<Album>? albums = null;
     private bool getAlbumsError;
+
+    private bool IsLoading = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -36,6 +46,10 @@
         catch (Exception)
         {
             getAlbumsError = true;
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 }
