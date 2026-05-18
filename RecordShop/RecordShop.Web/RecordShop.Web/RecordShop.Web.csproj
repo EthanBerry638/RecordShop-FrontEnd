@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazorise.LoadingIndicator" Version="2.1.2" />
     <ProjectReference Include="..\RecordShop.Web.Client\RecordShop.Web.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.27" />
   </ItemGroup>
