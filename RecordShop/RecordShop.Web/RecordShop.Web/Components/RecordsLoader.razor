@@ -7,12 +7,7 @@
 
 @if(albums != null && !getAlbumsError)
 {
-	<ul>
-        @foreach (var album in albums)
-        {
-            <li>@album.Title</li>
-        }
-    </ul>
+    <RecordSummaryList Albums="albums.ToList()"></RecordSummaryList>
 }
 else
 {
