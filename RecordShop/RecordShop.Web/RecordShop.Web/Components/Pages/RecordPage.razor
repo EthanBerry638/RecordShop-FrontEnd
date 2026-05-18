@@ -1,5 +1,10 @@
-﻿@page "/records/{id}"
+﻿@page "/records/{Id}"
 
 <h3>Record: </h3>
 
 <RecordLoaderById Id="2"></RecordLoaderById>
+
+@code {
+    [SupplyParameterFromQuery]
+    public int id { get; set; }
+}
