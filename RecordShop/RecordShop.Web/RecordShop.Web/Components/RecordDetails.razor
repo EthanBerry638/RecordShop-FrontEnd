@@ -6,7 +6,7 @@
 
 @if (AlbumToUpdate != null)
 {
-    <EditForm Model="AlbumToUpdate" FormName="EditAlbumForm">
+    <EditForm Model="AlbumToUpdate" OnValidSubmit="HandleSave" FormName="EditAlbumForm">
         <div>
             <label>
                 Title: 
@@ -38,4 +38,20 @@
 @code {
     [Parameter]
     public Album? AlbumToUpdate { get; set; }
+
+    private Album? updatedRecord;
+
+    private void HandleSave()
+    {
+        if (AlbumToUpdate != null)
+        {
+            updatedRecord = new Album
+            {
+                Id = AlbumToUpdate.Id,
+                Title = AlbumToUpdate.Title,
+                Description = AlbumToUpdate.Description,
+                Price = AlbumToUpdate.Price
+            };
+        }
+    }
 }
