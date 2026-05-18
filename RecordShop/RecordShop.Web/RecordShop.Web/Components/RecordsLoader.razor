@@ -22,8 +22,6 @@ else
     private IEnumerable<Album>? albums = null;
     private bool getAlbumsError;
 
-    private bool IsLoading = true;
-
     protected override async Task OnInitializedAsync()
     {
         try
@@ -48,10 +46,6 @@ else
         catch (Exception)
         {
             getAlbumsError = true;
-        }
-        finally
-        {
-            IsLoading = false;
         }
     }
 }
