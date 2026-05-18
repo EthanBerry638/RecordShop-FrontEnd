@@ -42,6 +42,10 @@ else
                 albums = await JsonSerializer.DeserializeAsync
                     <IEnumerable<Album>>(responseStream, options);
             }
+            else
+            {
+                getAlbumsError = true;
+            }
         }
         catch (Exception)
         {
