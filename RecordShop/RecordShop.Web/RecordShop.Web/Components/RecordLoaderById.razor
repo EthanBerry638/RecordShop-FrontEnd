@@ -19,9 +19,11 @@ else
 }
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
+
     private Album? album = null;
     private bool getAlbumsError;
-    private int id;
 
     private bool IsLoading = true;
 
@@ -31,7 +33,7 @@ else
         {
             using var request = new HttpRequestMessage(
                 HttpMethod.Get,
-                $"https://localhost:7091/api/Album/{id}");
+                $"https://localhost:7091/api/Album/{Id}");
 
             var client = ClientFactory.CreateClient();
 
