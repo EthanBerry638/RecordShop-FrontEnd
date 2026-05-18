@@ -8,6 +8,7 @@
 {
     <EditForm Model="AlbumToUpdate" OnValidSubmit="HandleSave" FormName="EditAlbumForm">
     <DataAnnotationsValidator/>
+    <ValidationSummary/>
         <div>
             <label>
                 Title: 
@@ -30,7 +31,7 @@
         </div>
 
         <div>
-            <button>Click to save changes</button>
+            <button type="submit">Click to save changes</button>
         </div>
 
     </EditForm>
@@ -43,7 +44,7 @@
         <li>Id: @updatedRecord.Id</li>
         <li>Title: @updatedRecord.Title</li>
         <li>Description: @updatedRecord.Description</li>
-        <li>Price: @updatedRecord.Price</li>
+        <li>Price: £@updatedRecord.Price</li>
     </ul>
 }
 
