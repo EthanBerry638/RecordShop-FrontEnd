@@ -10,11 +10,11 @@ namespace RecordShop.Web.Models
 
         [JsonPropertyName("title")]
         [Required][MaxLength(150, ErrorMessage = "Title cannot exceed 150 characters")]
-        public string Title { get; set; } = string.Empty;
+        public string Title { get; set; }
 
         [JsonPropertyName("description")]
         [Required][MaxLength(250, ErrorMessage = "Description cannot exceed 250 characters")]
-        public string Description { get; set; } = string.Empty;
+        public string Description { get; set; }
 
         [JsonPropertyName("releasedate")]
         public DateOnly? ReleaseDate { get; set; }
