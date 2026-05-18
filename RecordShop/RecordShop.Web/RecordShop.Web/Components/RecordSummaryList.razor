@@ -1,0 +1,22 @@
+﻿@using Models;
+
+<h3>Record Summary List</h3>
+
+@if (Albums != null && Albums.Any())
+{
+    <div class="list-group">
+        @foreach(var album in Albums)
+        {
+            <RecordSummary Album="album"></RecordSummary>
+        }
+    </div>
+}
+else
+{
+    <p>No albums found</p>
+}
+
+@code {
+    [Parameter]
+    public List<Album> Albums { get; set; }
+}

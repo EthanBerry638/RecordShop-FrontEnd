@@ -1,0 +1,21 @@
+﻿@using Models;
+
+<h3>Record Summary</h3>
+
+@if (Album != null)
+{
+    <div class="card">
+        <h4>@Album.Title</h4>
+        <p>Description: @Album.Description</p>
+        <p>Price: @Album.Price</p>
+    </div>
+}
+else
+{
+    <p>No album data available</p>
+}
+
+@code {
+    [Parameter]
+    public Album Album { get; set; }
+}
