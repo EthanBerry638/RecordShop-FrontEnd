@@ -36,11 +36,13 @@ else
 
             using var response = await client.SendAsync(request);
 
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
             if (response.IsSuccessStatusCode)
             {
                 using var responseStream = await response.Content.ReadAsStreamAsync();
                 albums = await JsonSerializer.DeserializeAsync
-                    <IEnumerable<Album>>(responseStream);
+                    <IEnumerable<Album>>(responseStream, options);
             }
         }
         catch (Exception)
