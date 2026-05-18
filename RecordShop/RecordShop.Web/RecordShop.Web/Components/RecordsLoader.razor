@@ -11,14 +11,14 @@
 }
 else if (albums == null)
 {
-    <LoadingIndicator IsLoading="true"></LoadingIndicator>
+    <Spinner Color="SpinnerColor.Primary" />
 }
 else
 {
     <RecordSummaryList Albums="@albums.ToList()"></RecordSummaryList>
 }
 
-    @code {
+@code {
     private IEnumerable<Album>? albums = null;
     private bool getAlbumsError;
 

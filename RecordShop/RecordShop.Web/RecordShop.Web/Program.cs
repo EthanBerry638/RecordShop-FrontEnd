@@ -1,6 +1,4 @@
 using RecordShop.Web.Components;
-using Blazorise;
-using Blazorise.Icons.FontAwesome;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
-
-builder.Services.AddBlazorise().AddEmptyProviders().AddFontAwesomeIcons();
 
 builder.Services.AddHttpClient();
 
