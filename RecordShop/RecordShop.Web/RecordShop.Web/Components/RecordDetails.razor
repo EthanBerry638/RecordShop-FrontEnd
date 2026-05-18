@@ -1,5 +1,6 @@
 ﻿@using Models;
 @rendermode InteractiveServer
+@inject HttpClient Http
 
 <h3>Current Record Details: </h3>
 
@@ -67,7 +68,7 @@
 
     private Album? updatedRecord;
 
-    private void HandleSave()
+    protected async Task HandleSave()
     {
         if (AlbumToUpdate != null)
         {
@@ -80,5 +81,7 @@
                 Price = AlbumToUpdate.Price
             };
         }
+
+        await Http.PutAsJsonAsync("api/Album/3", updatedRecord);
     }
 }
