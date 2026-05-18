@@ -4,14 +4,13 @@
 @using Models;
 @attribute [StreamRendering]
 
-<h2>Fetching Data From API...</h2>
-
 @if(getAlbumsError)
 {
     <p>Failed to load record data. Please try again later.</p>
 }
 else if (albums == null)
 {
+    <h2>Fetching Data...</h2>
     <Spinner Color="SpinnerColor.Primary" />
 }
 else
