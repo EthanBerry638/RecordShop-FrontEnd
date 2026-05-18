@@ -7,6 +7,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddBlazorBootstrap();
+
 builder.Services.AddHttpClient();
 
 var app = builder.Build();
