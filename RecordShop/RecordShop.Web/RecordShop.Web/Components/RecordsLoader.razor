@@ -5,13 +5,9 @@
 
 <h2>Fetching Data From API...</h2>
 
-@if(albums != null && !getAlbumsError)
+@if(getAlbumsError)
 {
-    <RecordSummaryList Albums="albums.ToList()"></RecordSummaryList>
-}
-else
-{
-	<div>TODO: Put an actual loading indicator here...</div>
+    <p>Failed to load record data. Please try again later.</p>
 }
 
 @code {
