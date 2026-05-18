@@ -3,7 +3,21 @@
 @inject IHttpClientFactory ClientFactory
 @using Models;
 
-<h3>RecordsLoader</h3>
+<h2>Fetching Data From API...</h2>
+
+@if(albums != null && !getAlbumsError)
+{
+	<ul>
+        @foreach (var album in albums)
+        {
+            <li>@album.Title</li>
+        }
+    </ul>
+}
+else
+{
+	<div>TODO: Put an actual loading indicator here...</div>
+}
 
 @code {
     private IEnumerable<Album>? albums = [];
