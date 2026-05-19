@@ -3,7 +3,7 @@
 
 <h3>Enter Details Below To Add A Record</h3>
 
-<EditForm>
+<EditForm Model="Album">
     
     <div>
         <label>
@@ -36,5 +36,6 @@
 </EditForm>
 
 @code {
-
+    [SupplyParameterFromForm]
+    private Album? Album { get; set; }
 }
