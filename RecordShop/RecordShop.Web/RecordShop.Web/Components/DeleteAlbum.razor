@@ -1,7 +1,9 @@
-﻿@rendermode InteractiveServer
+﻿@using Models;
+@rendermode InteractiveServer
 
 <button>🗑️</button>
 
 @code {
-
+    [Parameter]
+    public Album? Album { get; set; }
 }

@@ -14,7 +14,7 @@
             <p>Release Date: @Album.ReleaseDate</p>
         }
         <p>Price: £@Album.Price.ToString("F")</p>
-        <DeleteAlbum></DeleteAlbum>
+        <DeleteAlbum Album="Album"></DeleteAlbum>
     </div>
 }
 else
@@ -24,7 +24,7 @@ else
 
 @code {
     [Parameter]
-    public Album Album { get; set; }
+    public Album? Album { get; set; }
 
     private void PerformNavigate()
     {
