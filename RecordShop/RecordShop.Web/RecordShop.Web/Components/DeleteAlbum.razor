@@ -1,9 +1,21 @@
 ﻿@using Models;
 @rendermode InteractiveServer
 
-<button>🗑️</button>
+<button @onclick="HandleDeletion">🗑️</button>
 
 @code {
     [Parameter]
     public Album? Album { get; set; }
+
+    private async Task HandleDeletion()
+    {
+        try
+        {
+
+        }
+        catch (Exception)
+        {
+            
+        }
+    }
 }
