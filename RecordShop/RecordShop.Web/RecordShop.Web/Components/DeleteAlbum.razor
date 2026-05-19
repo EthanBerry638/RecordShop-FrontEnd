@@ -4,6 +4,15 @@
 
 <button @onclick="HandleDeletion">🗑️</button>
 
+@if (isDeleted)
+{
+    <p>@Album.Title was deleted</p>
+}
+else
+{
+    <p>Failed to delete. Please try again later or refresh</p>
+}
+
 @code {
     [Parameter]
     public Album? Album { get; set; }
