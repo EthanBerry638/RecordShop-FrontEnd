@@ -1,0 +1,17 @@
+﻿@rendermode InteractiveServer
+
+<div class="card">
+    <h3>Confirm Deletion?</h3>
+
+    <button>Yes</button>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback<bool> ConfirmChange { get; set; }
+
+    private async Task ButtonClick()
+    {
+        
+    }
+}
