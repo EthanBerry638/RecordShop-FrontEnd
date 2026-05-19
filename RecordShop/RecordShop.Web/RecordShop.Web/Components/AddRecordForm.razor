@@ -43,6 +43,12 @@
 
 </EditForm>
 
+@if(SavedAlbum != null)
+{
+    <h4>Success! Saved album details: </h4>
+    <RecordSummary Album="SavedAlbum"></RecordSummary>
+}
+
 @if (errorMessage != null)
 {
     <p>@errorMessage</p>
@@ -52,7 +58,7 @@
     [SupplyParameterFromForm]
     private Album? Album { get; set; }
 
-    private Album? SavedAlbum { get; set; }
+    private Album? SavedAlbum { get; set; } = null;
     private string? errorMessage = null;
 
     protected override void OnInitialized()
