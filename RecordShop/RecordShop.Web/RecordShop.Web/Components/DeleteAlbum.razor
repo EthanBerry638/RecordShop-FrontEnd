@@ -7,6 +7,8 @@
     [Parameter]
     public Album? Album { get; set; }
 
+    private bool isDeleted = false;
+
     private async Task HandleDeletion()
     {
         try
@@ -15,7 +17,7 @@
         }
         catch (Exception)
         {
-            
+            isDeleted = false;
         }
     }
 }
