@@ -13,6 +13,8 @@ builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
+app.UseStatusCodePagesWithRedirects("StatusCode/{0}");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
