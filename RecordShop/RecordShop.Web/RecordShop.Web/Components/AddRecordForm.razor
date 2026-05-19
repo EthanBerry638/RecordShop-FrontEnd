@@ -1,5 +1,6 @@
 ﻿@using Models;
 @rendermode InteractiveServer
+@inject HttpClient Http
 
 <h3>Enter Details Below To Add A Record</h3>
 
@@ -53,6 +54,16 @@
 
     private async Task HandleSave()
     {
-        
+        try
+        {
+            if (Album != null)
+            {
+                var response = await Http.PostAsJsonAsync("https://localhost:7091/api/Album", Album);
+            }
+        }
+        catch (Exception)
+        {
+            
+        }
     }
 }
