@@ -11,25 +11,28 @@
     <div>
         <label>
             Title:
-            <input @bind-value="Album.Title"/>
+            <input type="text" @bind-value="Album!.Title"/>
         </label>
     </div>
 
     <div>
         <label>
             Description:
+            <input type="text" @bind-value="Album!.Description" />
         </label>
     </div>
 
     <div>
         <label>
             Release Date:
+            <input type="date" @bind-value="Album.ReleaseDate" />
         </label>
     </div>
 
     <div>
         <label>
             Price:
+            <input type="number" @bind-value="Album.Price" />
         </label>
     </div>
 
