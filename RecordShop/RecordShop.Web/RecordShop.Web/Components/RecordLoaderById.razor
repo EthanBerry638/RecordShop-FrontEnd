@@ -1,8 +1,8 @@
 ﻿@using System.Text.Json
 @using System.Text.Json.Serialization
-@inject IHttpClientFactory ClientFactory
 @using Models;
-@attribute [StreamRendering]
+@rendermode InteractiveServer
+@inject HttpClient Http
 
 @if(getAlbumsError)
 {
@@ -30,21 +30,13 @@ else
     {
         try
         {
-            using var request = new HttpRequestMessage(
-                HttpMethod.Get,
-                $"https://localhost:7091/api/Album/{Id}");
-
-            var client = ClientFactory.CreateClient();
-
-            using var response = await client.SendAsync(request);
+            var response = await Http.GetFromJsonAsync<Album>($"https://localhost:7091/api/Album/{Id}");
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-            if (response.IsSuccessStatusCode)
+            if (response != null)
             {
-                using var responseStream = await response.Content.ReadAsStreamAsync();
-                album = await JsonSerializer.DeserializeAsync
-                    <Album>(responseStream, options);
+                album = response;
             }
             else
             {
