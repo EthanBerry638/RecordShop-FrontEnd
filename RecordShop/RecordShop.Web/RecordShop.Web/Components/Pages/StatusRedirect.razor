@@ -1,0 +1,15 @@
+﻿@page "/StatusCode/{Status:int}"
+
+@code {
+    [Parameter]
+    public int Status { get; set; }
+}
+
+<h3>@Status</h3>
+
+@{
+    if (Status == 404)
+    {
+        <_404 />
+    }
+}
