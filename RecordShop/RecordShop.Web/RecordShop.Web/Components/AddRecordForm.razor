@@ -3,7 +3,7 @@
 
 <h3>Enter Details Below To Add A Record</h3>
 
-<EditForm Model="Album" OnValidSubmit="HandleSave">
+<EditForm Model="Album" OnValidSubmit="HandleSave" FormName="AddAlbumForm">
 
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
@@ -11,6 +11,7 @@
     <div>
         <label>
             Title:
+            <input @bind-value="Album.Title"/>
         </label>
     </div>
 
@@ -41,6 +42,11 @@
 @code {
     [SupplyParameterFromForm]
     private Album? Album { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Album ??= new();
+    }
 
     private async Task HandleSave()
     {
