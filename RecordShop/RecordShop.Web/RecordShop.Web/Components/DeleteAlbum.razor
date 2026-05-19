@@ -8,7 +8,7 @@
 {
     <p>@Album.Title was deleted</p>
 }
-else
+else if (!isDeleted && isClicked)
 {
     <p>Failed to delete. Please try again later or refresh</p>
 }
@@ -18,9 +18,11 @@ else
     public Album? Album { get; set; }
 
     private bool isDeleted = false;
+    private bool isClicked = false;
 
     private async Task HandleDeletion()
     {
+        isClicked = true;
         try
         {
             var response = await Http.DeleteAsync($"https://localhost:7091/api/Album/{Album!.Id}");
