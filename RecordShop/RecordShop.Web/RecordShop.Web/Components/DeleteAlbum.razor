@@ -23,7 +23,7 @@ else
     {
         try
         {
-            var response = await Http.DeleteAsync($"https://localhost:7091/api/Albums/{Album!.Id}");
+            var response = await Http.DeleteAsync($"https://localhost:7091/api/Album/{Album!.Id}");
 
             if (response.IsSuccessStatusCode)
             {
