@@ -3,8 +3,11 @@
 
 <h3>Enter Details Below To Add A Record</h3>
 
-<EditForm Model="Album">
-    
+<EditForm Model="Album" OnValidSubmit="HandleSave">
+
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+
     <div>
         <label>
             Title:
@@ -38,4 +41,9 @@
 @code {
     [SupplyParameterFromForm]
     private Album? Album { get; set; }
+
+    private async Task HandleSave()
+    {
+        
+    }
 }
