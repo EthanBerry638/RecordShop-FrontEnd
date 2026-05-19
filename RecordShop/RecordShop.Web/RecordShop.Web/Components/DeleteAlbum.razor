@@ -1,5 +1,6 @@
 ﻿@using Models;
 @rendermode InteractiveServer
+@inject HttpClient Http
 
 <button @onclick="HandleDeletion">🗑️</button>
 
@@ -13,7 +14,7 @@
     {
         try
         {
-
+            var response = await Http.DeleteAsync($"https://localhost:7091/api/Albums/{Album!.Id}");
         }
         catch (Exception)
         {
