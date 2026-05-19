@@ -38,3 +38,11 @@ app.MapRazorComponents<App>()
     .AddAdditionalAssemblies(typeof(RecordShop.Web.Client._Imports).Assembly);
 
 app.Run();
+
+/*
+ * TODO
+ * Go through project and clean up code - maybe decouple editing, seperate button component? Not sure yet
+ * Add styling, even just some basic stuff
+ * Update README beyond basic current state
+ * Implement delete page
+*/
