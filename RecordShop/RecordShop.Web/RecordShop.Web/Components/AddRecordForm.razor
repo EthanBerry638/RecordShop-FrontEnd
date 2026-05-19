@@ -74,7 +74,11 @@
             {
                 var response = await Http.PostAsJsonAsync("https://localhost:7091/api/Album", Album);
 
-                if (!response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                {
+                    SavedAlbum = Album;
+                }
+                else
                 {
                     errorMessage = "Failed to add album. Please try again later";
                 }
