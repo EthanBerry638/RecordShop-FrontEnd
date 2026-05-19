@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="Blazor.Bootstrap" Version="3.5.0" />
+    <PackageReference Include="Blazorise.Bulma" Version="2.1.2" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="2.1.2" />
+    <PackageReference Include="Blazorise.Icons.Lucide" Version="2.1.2" />
     <PackageReference Include="Blazorise.LoadingIndicator" Version="2.1.2" />
     <ProjectReference Include="..\RecordShop.Web.Client\RecordShop.Web.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.27" />
