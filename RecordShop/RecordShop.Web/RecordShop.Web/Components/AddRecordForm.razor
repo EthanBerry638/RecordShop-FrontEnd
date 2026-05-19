@@ -47,6 +47,8 @@
     [SupplyParameterFromForm]
     private Album? Album { get; set; }
 
+    private string? errorMessage = null;
+
     protected override void OnInitialized()
     {
         Album ??= new();
@@ -59,11 +61,16 @@
             if (Album != null)
             {
                 var response = await Http.PostAsJsonAsync("https://localhost:7091/api/Album", Album);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    errorMessage = "Failed to add album. Please try again later";
+                }
             }
         }
         catch (Exception)
         {
-            
+            errorMessage = "Failed to add album. Please try again later";
         }
     }
 }
