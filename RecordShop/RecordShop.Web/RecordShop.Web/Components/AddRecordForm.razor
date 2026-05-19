@@ -43,6 +43,11 @@
 
 </EditForm>
 
+@if (errorMessage != null)
+{
+    <p>@errorMessage</p>
+}
+
 @code {
     [SupplyParameterFromForm]
     private Album? Album { get; set; }
