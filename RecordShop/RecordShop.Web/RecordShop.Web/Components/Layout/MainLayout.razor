@@ -1,17 +1,20 @@
 ﻿@inherits LayoutComponentBase
 
-<header>
-    <h1>Off The Record</h1>
-    <span>
-        <NavMenu></NavMenu>
-    </span>
-</header>
+<div class="d-flex vh-100 bg-light">
+        <span>
+            <NavMenu></NavMenu>
+        </span>
 
-<main>
-    <article>
-        @Body
-    </article>
-</main>
+    <header>
+        <h1>Off The Record</h1>
+    </header>
+
+    <main>
+        <article>
+            @Body
+        </article>
+    </main>
+</div>
 
 <footer>
     <p>Ethan Berry 2026</p>
