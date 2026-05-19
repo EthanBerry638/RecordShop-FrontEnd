@@ -15,6 +15,15 @@
         try
         {
             var response = await Http.DeleteAsync($"https://localhost:7091/api/Albums/{Album!.Id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                isDeleted = true;
+            }
+            else
+            {
+                isDeleted = false;
+            }
         }
         catch (Exception)
         {
