@@ -10,6 +10,8 @@ Viewing all records
 Viewing a record individually and editing it via a form
 Adding a record via a form
 
+You can delete a record whilst viewing all records or viewing a specific record in the edit form
+
 ## Tech Stack 🛠️
 
 Language: C# 11 / .NET 8
@@ -17,8 +19,6 @@ Language: C# 11 / .NET 8
 Framework: Blazor
 
 ## Roadmap 🛣️
-
-Delete page
 
 Add more custom styling
 
