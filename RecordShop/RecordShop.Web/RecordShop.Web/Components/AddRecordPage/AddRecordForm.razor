@@ -64,7 +64,9 @@
         {
             try
             {
+                await _albumService.AddAlbumAsync(Album);
 
+                postError = false;
             }
             catch(Exception)
             {
