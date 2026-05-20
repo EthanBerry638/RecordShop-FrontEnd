@@ -80,6 +80,10 @@ else if (showSuccess)
 
     protected async Task HandleSave()
     {
+        replaceAlbumError = false;
+        showSuccess = false;
+        noChangesDetected = false;
+
         if (AlbumToUpdate?.Title == originalAlbum?.Title &&
             AlbumToUpdate?.Description == originalAlbum?.Description &&
             AlbumToUpdate?.ReleaseDate == originalAlbum?.ReleaseDate &&
@@ -93,9 +97,6 @@ else if (showSuccess)
 
         if (AlbumToUpdate != null)
         {
-            replaceAlbumError = false;
-            showSuccess = false;
-
             try
             {
                 await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, AlbumToUpdate!.Id);
