@@ -44,6 +44,15 @@
 
 </EditForm>
 
+@if(postError)
+{
+    <p>Failed to add album. Please try again later</p>
+}
+else
+{
+    <AddedRecordSummary Album="Album"></AddedRecordSummary>
+}
+
 @code {
     [SupplyParameterFromForm]
     private Album? Album { get; set; }
