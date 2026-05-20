@@ -49,7 +49,7 @@
 {
     <p>Failed to replace album. Please try again later</p>
 }
-else
+else if (showSuccess)
 {
     <h3>Success! Updated Record:</h3>
     <RecordSummary Album="AlbumToUpdate"></RecordSummary>
@@ -60,6 +60,7 @@ else
     public Album? AlbumToUpdate { get; set; }
 
     private bool replaceAlbumError = false;
+    private bool showSuccess = false;
 
     protected async Task HandleSave()
     {
@@ -69,7 +70,7 @@ else
             {
                 await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, AlbumToUpdate!.Id);
 
-                replaceAlbumError = false;
+                showSuccess = true;
             }
             catch
             {
