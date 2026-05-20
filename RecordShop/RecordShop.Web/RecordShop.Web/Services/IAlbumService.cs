@@ -5,5 +5,6 @@ namespace RecordShop.Web.Services
     public interface IAlbumService
     {
         Task<List<Album>?> GetAllAlbumsAsync();
+        Task<Album?> GetAlbumByIdAsync(int id);
     }
 }

@@ -12,5 +12,10 @@ namespace RecordShop.Web.Services
         {
             return await _httpClient.GetFromJsonAsync<List<Album>>(_baseApiUrl);
         }
+
+        public async Task<Album?> GetAlbumByIdAsync(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<Album>($"_baseApiUrl/{id}");
+        }
     }
 }
