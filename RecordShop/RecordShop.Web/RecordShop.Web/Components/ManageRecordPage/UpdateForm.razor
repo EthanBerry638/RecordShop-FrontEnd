@@ -1,6 +1,7 @@
-﻿@using Models;
+﻿@using Models
+@using Services
+@inject IAlbumService _albumService
 @rendermode InteractiveServer
-@inject HttpClient Http
 
 @if (AlbumToUpdate != null)
 {
@@ -89,15 +90,13 @@
             };
         }
 
-        var response = await Http.PutAsJsonAsync($"https://localhost:7091/api/Album/{Id}", updatedRecord);
-
-        if (response.IsSuccessStatusCode)
+        try
         {
-            updatedRecord = AlbumToUpdate;
+            await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, Id);
         }
-        else
+        catch
         {
-            errorMessage = "Failed to save changes. The API rejected the request.";
+            errorMessage = "Failed to edit album, please try again later";
         }
     }
 }
