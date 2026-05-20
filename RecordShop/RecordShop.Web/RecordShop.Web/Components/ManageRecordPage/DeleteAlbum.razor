@@ -6,7 +6,7 @@
 
 @if (isDeleted)
 {
-    <p>@Album.Title was deleted</p>
+    <p>Album was deleted</p>
 }
 else if (!isDeleted && isClicked)
 {
@@ -15,7 +15,7 @@ else if (!isDeleted && isClicked)
 
 @code {
     [Parameter]
-    public Album? Album { get; set; }
+    public int Id { get; set; }
 
     private bool isDeleted = false;
     private bool isClicked = false;
@@ -25,7 +25,7 @@ else if (!isDeleted && isClicked)
         isClicked = true;
         try
         {
-            var response = await Http.DeleteAsync($"https://localhost:7091/api/Album/{Album!.Id}");
+            var response = await Http.DeleteAsync($"https://localhost:7091/api/Album/{Id}");
 
             if (response.IsSuccessStatusCode)
             {
