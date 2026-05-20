@@ -26,5 +26,14 @@ namespace RecordShop.Web.Services
 
             return await response.Content.ReadFromJsonAsync<Album>();
         }
+
+        public async Task<Album?> AddAlbumAsync(Album album)
+        {
+            var response = await _httpClient.PostAsJsonAsync(_baseApiUrl, album);
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<Album>();
+        }
     }
 }
