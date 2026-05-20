@@ -1,5 +1,6 @@
 ﻿@using Models
 @using Services
+@using RecordShop.Web.Components.Shared
 @inject IAlbumService _albumService
 @rendermode InteractiveServer
 
@@ -44,26 +45,14 @@
     </EditForm>
 }
 
-@if(updatedRecord != null)
+@if (replaceAlbumError)
 {
-    <h2>Updated Album Details: </h2>
-    <ul>
-        <li>Id: @Id</li>
-        <li>Title: @updatedRecord.Title</li>
-        <li>Description: @updatedRecord.Description</li>
-        @if(updatedRecord.ReleaseDate != null)
-        {
-            <li>Release Date: @updatedRecord.ReleaseDate</li>
-        }
-        <li>Price: £@updatedRecord.Price.ToString("F")</li>
-    </ul>
+    <p>Failed to replace album. Please try again later</p>
 }
-
-@if (errorMessage != null)
+else
 {
-    <div class="alert-danger">
-        @errorMessage
-    </div>
+    <h3>Success! Updated Record:</h3>
+    <RecordSummary Album="updatedRecord"></RecordSummary>
 }
 
 @code {
@@ -74,7 +63,7 @@
     public int Id { get; set; }
 
     private Album? updatedRecord;
-    private string? errorMessage = null;
+    private bool replaceAlbumError = false;
 
     protected async Task HandleSave()
     {
@@ -93,10 +82,12 @@
         try
         {
             await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, Id);
+
+            replaceAlbumError = false;
         }
         catch
         {
-            errorMessage = "Failed to edit album, please try again later";
+            replaceAlbumError = true;
         }
     }
 }
