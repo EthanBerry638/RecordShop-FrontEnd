@@ -3,6 +3,7 @@
 @using Models;
 @using Services;
 @inject IAlbumService _albumService
+@rendermode InteractiveServer
 
 @if(getAlbumsError)
 {
@@ -26,8 +27,6 @@ else
     {
         try
         {
-            await Task.Delay(2000);
-
             var response = await _albumService.GetAllAlbumsAsync();
 
             if (response != null)
