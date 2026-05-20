@@ -1,12 +1,10 @@
 ﻿@using Models;
 @rendermode InteractiveServer
-@inject NavigationManager Navigation
 
 @if (Album != null)
 {
     <div class="card">
         <h4>@Album.Title</h4> <span>
-            <button @onclick="PerformNavigate">Edit</button>
         </span>
         <p>Description: @Album.Description</p>
         @if (Album.ReleaseDate != null)
@@ -14,7 +12,6 @@
             <p>Release Date: @Album.ReleaseDate</p>
         }
         <p>Price: £@Album.Price.ToString("F")</p>
-        <DeleteAlbum Album="Album"></DeleteAlbum>
     </div>
 }
 else
@@ -25,9 +22,4 @@ else
 @code {
     [Parameter]
     public Album? Album { get; set; }
-
-    private void PerformNavigate()
-    {
-        Navigation.NavigateTo($"/records/{Album.Id}");
-    }
 }
