@@ -1,11 +1,15 @@
 ﻿@using RecordShop.Web.Components.ManageRecordPage
+@using RecordShop.Web.Components.Shared
+@rendermode InteractiveServer
 @page "/records/{Id:int}"
 
 <PageTitle>Manage Record</PageTitle>
 
 <h3>Record: </h3>
 
-<RecordLoaderById Id="@Id"></RecordLoaderById>
+<RecordLoaderById Id="@Id" Context="album">
+    <RecordSummary Album="album"></RecordSummary>
+</RecordLoaderById>
 
 @code {
     [Parameter]

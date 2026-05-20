@@ -16,12 +16,14 @@ else if (album == null)
 }
 else
 {
-    <RecordSummary Album="album"></RecordSummary>
+    @ChildContent(album);
 }
 
 @code {
     [Parameter]
     public int Id { get; set; }
+
+    [Parameter] public RenderFragment<Album> ChildContent { get; set; }
 
     private Album? album = null;
     private bool getAlbumsError;
