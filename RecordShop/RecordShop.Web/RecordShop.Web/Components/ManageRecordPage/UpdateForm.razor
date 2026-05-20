@@ -4,6 +4,8 @@
 @inject IAlbumService _albumService
 @rendermode InteractiveServer
 
+@*Note: Original record does not update on the page when changes are saved. Small UX to fix later*@
+
 @if (AlbumToUpdate != null)
 {
     <EditForm Model="AlbumToUpdate" OnValidSubmit="HandleSave" FormName="EditAlbumForm">
