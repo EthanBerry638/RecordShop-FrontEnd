@@ -59,8 +59,14 @@ else if (showSuccess)
     [Parameter]
     public Album? AlbumToUpdate { get; set; }
 
+    private Album? originalAlbum;
     private bool replaceAlbumError = false;
     private bool showSuccess = false;
+
+    protected override void OnParametersSet()
+    {
+        originalAlbum = AlbumToUpdate;
+    }
 
     protected async Task HandleSave()
     {
