@@ -18,4 +18,4 @@ namespace RecordShop.Web.Services
             return await _httpClient.GetFromJsonAsync<Album>($"{_baseApiUrl}/{id}");
         }
     }
-}
+} //
