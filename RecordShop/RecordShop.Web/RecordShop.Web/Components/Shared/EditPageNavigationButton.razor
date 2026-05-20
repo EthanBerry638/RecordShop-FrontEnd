@@ -1,0 +1,13 @@
+﻿@inject NavigationManager Navigation
+
+<button @onclick="PerformNavigate">Edit</button>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private void PerformNavigate()
+    {
+        Navigation.NavigateTo($"/records/{Id}");
+    }
+}
