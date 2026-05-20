@@ -1,6 +1,7 @@
 ﻿@using Models;
+@using Services;
+@inject IAlbumService _albumService
 @rendermode InteractiveServer
-@inject HttpClient Http
 
 <button @onclick="HandleDeletion">🗑️</button>
 
@@ -22,19 +23,15 @@ else if (!isDeleted && isClicked)
 
     private async Task HandleDeletion()
     {
+        isDeleted = false;
         isClicked = true;
+
         try
         {
-            var response = await Http.DeleteAsync($"https://localhost:7091/api/Album/{Id}");
+            await _albumService.DeleteAlbumAsync(Id);
 
-            if (response.IsSuccessStatusCode)
-            {
-                isDeleted = true;
-            }
-            else
-            {
-                isDeleted = false;
-            }
+            isClicked = true;
+            isDeleted = true;
         }
         catch (Exception)
         {
