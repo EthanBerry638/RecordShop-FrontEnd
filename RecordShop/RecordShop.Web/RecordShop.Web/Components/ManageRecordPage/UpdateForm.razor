@@ -59,9 +59,6 @@ else
     [Parameter]
     public Album? AlbumToUpdate { get; set; }
 
-    [Parameter]
-    public int Id { get; set; }
-
     private Album? updatedRecord;
     private bool replaceAlbumError = false;
 
@@ -81,7 +78,7 @@ else
 
         try
         {
-            await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, Id);
+            await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, AlbumToUpdate!.Id);
 
             replaceAlbumError = false;
         }
