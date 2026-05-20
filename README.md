@@ -20,6 +20,8 @@ Framework: Blazor
 
 ## Roadmap 🛣️
 
+Implement delete confirmation
+
 Add more custom styling
 
 Decouple editing from viewing a single record
