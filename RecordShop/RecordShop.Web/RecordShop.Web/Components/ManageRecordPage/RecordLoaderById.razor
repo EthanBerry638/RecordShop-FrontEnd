@@ -2,8 +2,9 @@
 @using System.Text.Json.Serialization
 @using Models;
 @using RecordShop.Web.Components.Shared
+@using Services
+@inject IAlbumService _albumService
 @rendermode InteractiveServer
-@inject HttpClient Http
 
 @if(getAlbumsError)
 {
@@ -23,7 +24,7 @@ else
     [Parameter]
     public int Id { get; set; }
 
-    [Parameter] public RenderFragment<Album> ChildContent { get; set; }
+    [Parameter] public RenderFragment<Album>? ChildContent { get; set; }
 
     private Album? album = null;
     private bool getAlbumsError;
@@ -32,9 +33,7 @@ else
     {
         try
         {
-            var response = await Http.GetFromJsonAsync<Album>($"https://localhost:7091/api/Album/{Id}");
-
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var response = await _albumService.GetAlbumByIdAsync(Id);
 
             if (response != null)
             {
