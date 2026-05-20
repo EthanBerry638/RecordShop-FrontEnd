@@ -1,0 +1,46 @@
+﻿using RecordShop.Web.Models;
+
+namespace RecordShop.Web.Services
+{
+    public class AlbumService (HttpClient httpClient) : IAlbumService
+    {
+        private readonly HttpClient _httpClient = httpClient;
+
+        private const string _baseApiUrl = "https://localhost:7091/api/Album";
+
+        public async Task<List<Album>?> GetAllAlbumsAsync()
+        {
+            return await _httpClient.GetFromJsonAsync<List<Album>>(_baseApiUrl);
+        }
+
+        public async Task<Album?> GetAlbumByIdAsync(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<Album>($"{_baseApiUrl}/{id}");
+        }
+
+        public async Task<Album?> ReplaceAlbumByIdAsync(Album album, int id)
+        {
+            var response = await _httpClient.PutAsJsonAsync($"{_baseApiUrl}/{id}", album);
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<Album>();
+        }
+
+        public async Task<Album?> AddAlbumAsync(Album album)
+        {
+            var response = await _httpClient.PostAsJsonAsync(_baseApiUrl, album);
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<Album>();
+        }
+
+        public async Task DeleteAlbumAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"{_baseApiUrl}/{id}");
+
+            response.EnsureSuccessStatusCode();
+        }
+    }
+}

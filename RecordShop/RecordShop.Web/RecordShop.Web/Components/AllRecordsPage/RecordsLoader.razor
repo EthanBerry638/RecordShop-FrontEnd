@@ -1,7 +1,9 @@
 ﻿@using System.Text.Json
 @using System.Text.Json.Serialization
 @using Models;
-@inject HttpClient Http
+@using Services;
+@inject IAlbumService _albumService
+@rendermode InteractiveServer
 
 @if(getAlbumsError)
 {
@@ -25,9 +27,7 @@ else
     {
         try
         {
-            var response = await Http.GetFromJsonAsync<List<Album>>($"https://localhost:7091/api/Album");
-
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var response = await _albumService.GetAllAlbumsAsync();
 
             if (response != null)
             {

@@ -1,6 +1,7 @@
 ﻿@using Models;
+@using Services;
+@inject IAlbumService _albumService
 @rendermode InteractiveServer
-@inject HttpClient Http
 
 <h3>Enter Details Below To Add A Record</h3>
 
@@ -43,23 +44,21 @@
 
 </EditForm>
 
-@if(SavedAlbum != null)
+@if(postError)
 {
-    <h4>Success! Saved album details: </h4>
-    <AddedRecordSummary Album="SavedAlbum"></AddedRecordSummary>
+    <p>Failed to add album. Please try again later</p>
 }
-
-@if (errorMessage != null)
+else if (!postError && isPosted)
 {
-    <p>@errorMessage</p>
+    <AddedRecordSummary Album="Album"></AddedRecordSummary>
 }
 
 @code {
     [SupplyParameterFromForm]
     private Album? Album { get; set; }
 
-    private Album? SavedAlbum { get; set; } = null;
-    private string? errorMessage = null;
+    private bool postError = false;
+    private bool isPosted = false;
 
     protected override void OnInitialized()
     {
@@ -68,25 +67,26 @@
 
     private async Task HandleSave()
     {
-        try
-        {
-            if (Album != null)
-            {
-                var response = await Http.PostAsJsonAsync("https://localhost:7091/api/Album", Album);
+        postError = false;
+        isPosted = false;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    SavedAlbum = Album;
-                }
-                else
-                {
-                    errorMessage = "Failed to add album. Please try again later";
-                }
+        if (Album != null)
+        {
+            try
+            {
+                await _albumService.AddAlbumAsync(Album);
+
+                postError = false;
+                isPosted = true;
+            }
+            catch(Exception)
+            {
+                postError = true;
             }
         }
-        catch (Exception)
+        else
         {
-            errorMessage = "Failed to add album. Please try again later";
+            postError = true;
         }
     }
 }

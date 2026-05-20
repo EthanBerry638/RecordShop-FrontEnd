@@ -1,6 +1,10 @@
-﻿@using Models;
+﻿@using Models
+@using Services
+@using RecordShop.Web.Components.Shared
+@inject IAlbumService _albumService
 @rendermode InteractiveServer
-@inject HttpClient Http
+
+@*Note: Original record does not update on the page when changes are saved. Small UX to fix later*@
 
 @if (AlbumToUpdate != null)
 {
@@ -43,61 +47,77 @@
     </EditForm>
 }
 
-@if(updatedRecord != null)
+@if (replaceAlbumError)
 {
-    <h2>Updated Album Details: </h2>
-    <ul>
-        <li>Id: @Id</li>
-        <li>Title: @updatedRecord.Title</li>
-        <li>Description: @updatedRecord.Description</li>
-        @if(updatedRecord.ReleaseDate != null)
-        {
-            <li>Release Date: @updatedRecord.ReleaseDate</li>
-        }
-        <li>Price: £@updatedRecord.Price.ToString("F")</li>
-    </ul>
+    <p>Failed to replace album. Please try again later</p>
 }
-
-@if (errorMessage != null)
+else if (noChangesDetected)
 {
-    <div class="alert-danger">
-        @errorMessage
-    </div>
+   <p>No changes were detected so @AlbumToUpdate!.Title was not changed</p>
+}
+else if (showSuccess)
+{
+    <h3>Success! Updated Record:</h3>
+    <RecordSummary Album="AlbumToUpdate"></RecordSummary>
 }
 
 @code {
     [Parameter]
     public Album? AlbumToUpdate { get; set; }
 
-    [Parameter]
-    public int Id { get; set; }
+    private Album? originalAlbum;
+    private bool replaceAlbumError = false;
+    private bool showSuccess = false;
+    private bool noChangesDetected = false;
 
-    private Album? updatedRecord;
-    private string? errorMessage = null;
-
-    protected async Task HandleSave()
+    protected override void OnParametersSet()
     {
         if (AlbumToUpdate != null)
         {
-            updatedRecord = new Album()
+            originalAlbum = new Album
             {
-                Id = AlbumToUpdate.Id,
                 Title = AlbumToUpdate.Title,
                 Description = AlbumToUpdate.Description,
                 ReleaseDate = AlbumToUpdate.ReleaseDate,
                 Price = AlbumToUpdate.Price
             };
         }
+    }
 
-        var response = await Http.PutAsJsonAsync($"https://localhost:7091/api/Album/{Id}", updatedRecord);
+    protected async Task HandleSave()
+    {
+        replaceAlbumError = false;
+        showSuccess = false;
+        noChangesDetected = false;
 
-        if (response.IsSuccessStatusCode)
+        if (AlbumToUpdate?.Title == originalAlbum?.Title &&
+            AlbumToUpdate?.Description == originalAlbum?.Description &&
+            AlbumToUpdate?.ReleaseDate == originalAlbum?.ReleaseDate &&
+            AlbumToUpdate?.Price == originalAlbum?.Price
+        )
         {
-            updatedRecord = AlbumToUpdate;
+            noChangesDetected = true;
+            showSuccess = false;
+            return;
         }
-        else
+
+        if (AlbumToUpdate != null)
         {
-            errorMessage = "Failed to save changes. The API rejected the request.";
+            try
+            {
+                await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, AlbumToUpdate!.Id);
+
+                showSuccess = true;
+
+                originalAlbum!.Title = AlbumToUpdate.Title;
+                originalAlbum!.Description = AlbumToUpdate.Description;
+                originalAlbum.ReleaseDate = AlbumToUpdate.ReleaseDate;
+                originalAlbum.Price = AlbumToUpdate.Price;
+            }
+            catch
+            {
+                replaceAlbumError = true;
+            }
         }
     }
 }
