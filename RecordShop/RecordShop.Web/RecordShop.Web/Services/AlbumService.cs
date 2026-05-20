@@ -2,7 +2,7 @@
 
 namespace RecordShop.Web.Services
 {
-    public class AlbumService (HttpClient httpClient)
+    public class AlbumService (HttpClient httpClient) : IAlbumService
     {
         private readonly HttpClient _httpClient = httpClient;
 
