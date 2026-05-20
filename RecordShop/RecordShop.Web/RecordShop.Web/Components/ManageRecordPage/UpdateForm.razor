@@ -62,14 +62,35 @@ else if (showSuccess)
     private Album? originalAlbum;
     private bool replaceAlbumError = false;
     private bool showSuccess = false;
+    private bool noChangesDetected = false;
 
     protected override void OnParametersSet()
     {
-        originalAlbum = AlbumToUpdate;
+        if (AlbumToUpdate != null)
+        {
+            originalAlbum = new Album
+            {
+                Title = AlbumToUpdate.Title,
+                Description = AlbumToUpdate.Description,
+                ReleaseDate = AlbumToUpdate.ReleaseDate,
+                Price = AlbumToUpdate.Price
+            };
+        }
     }
 
     protected async Task HandleSave()
     {
+        if (AlbumToUpdate?.Title == originalAlbum?.Title &&
+            AlbumToUpdate?.Description == originalAlbum?.Description &&
+            AlbumToUpdate?.ReleaseDate == originalAlbum?.ReleaseDate &&
+            AlbumToUpdate?.Price == originalAlbum?.Price
+        )
+        {
+            noChangesDetected = true;
+            showSuccess = false;
+            return;
+        }
+
         if (AlbumToUpdate != null)
         {
             replaceAlbumError = false;
