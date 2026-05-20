@@ -2,8 +2,6 @@
 @rendermode InteractiveServer
 @inject HttpClient Http
 
-<h3>Current Record Details: </h3>
-
 @if (AlbumToUpdate != null)
 {
     <EditForm Model="AlbumToUpdate" OnValidSubmit="HandleSave" FormName="EditAlbumForm">
