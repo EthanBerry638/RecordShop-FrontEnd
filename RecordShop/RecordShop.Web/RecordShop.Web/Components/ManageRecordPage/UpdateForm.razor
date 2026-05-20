@@ -52,39 +52,29 @@
 else
 {
     <h3>Success! Updated Record:</h3>
-    <RecordSummary Album="updatedRecord"></RecordSummary>
+    <RecordSummary Album="AlbumToUpdate"></RecordSummary>
 }
 
 @code {
     [Parameter]
     public Album? AlbumToUpdate { get; set; }
 
-    private Album? updatedRecord;
     private bool replaceAlbumError = false;
 
     protected async Task HandleSave()
     {
         if (AlbumToUpdate != null)
         {
-            updatedRecord = new Album()
+            try
             {
-                Id = AlbumToUpdate.Id,
-                Title = AlbumToUpdate.Title,
-                Description = AlbumToUpdate.Description,
-                ReleaseDate = AlbumToUpdate.ReleaseDate,
-                Price = AlbumToUpdate.Price
-            };
-        }
+                await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, AlbumToUpdate!.Id);
 
-        try
-        {
-            await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, AlbumToUpdate!.Id);
-
-            replaceAlbumError = false;
-        }
-        catch
-        {
-            replaceAlbumError = true;
+                replaceAlbumError = false;
+            }
+            catch
+            {
+                replaceAlbumError = true;
+            }
         }
     }
 }
