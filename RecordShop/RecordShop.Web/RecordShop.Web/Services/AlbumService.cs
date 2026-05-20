@@ -35,5 +35,12 @@ namespace RecordShop.Web.Services
 
             return await response.Content.ReadFromJsonAsync<Album>();
         }
+
+        public async Task DeleteAlbumAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"{_baseApiUrl}/{id}");
+
+            response.EnsureSuccessStatusCode();
+        }
     }
 }
