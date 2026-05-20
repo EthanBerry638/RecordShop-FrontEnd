@@ -6,5 +6,6 @@ namespace RecordShop.Web.Services
     {
         Task<List<Album>?> GetAllAlbumsAsync();
         Task<Album?> GetAlbumByIdAsync(int id);
+        Task<Album?> ReplaceAlbumByIdAsync(Album album, int id);
     }
 }
