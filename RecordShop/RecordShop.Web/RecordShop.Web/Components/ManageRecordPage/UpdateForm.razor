@@ -66,6 +66,9 @@ else if (showSuccess)
     {
         if (AlbumToUpdate != null)
         {
+            replaceAlbumError = false;
+            showSuccess = false;
+
             try
             {
                 await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, AlbumToUpdate!.Id);
