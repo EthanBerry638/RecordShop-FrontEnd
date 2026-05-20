@@ -1,12 +1,11 @@
 ﻿@using RecordShop.Web.Components.ManageRecordPage
 @page "/records/{Id:int}"
 
-<PageTitle>Edit Record</PageTitle>
+<PageTitle>Manage Record</PageTitle>
 
 <h3>Record: </h3>
 
 <RecordLoaderById Id="@Id"></RecordLoaderById>
-<DeleteAlbum Id="@Id"></DeleteAlbum>
 
 @code {
     [Parameter]
