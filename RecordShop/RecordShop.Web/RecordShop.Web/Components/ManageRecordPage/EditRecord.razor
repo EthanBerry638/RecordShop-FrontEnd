@@ -1,0 +1,11 @@
+﻿@using Models;
+
+<div>
+    <UpdateForm AlbumToUpdate="Album"></UpdateForm>
+    <DeleteAlbum></DeleteAlbum>
+</div>
+
+@code {
+    [Parameter]
+    public Album? Album { get; set; }
+}
