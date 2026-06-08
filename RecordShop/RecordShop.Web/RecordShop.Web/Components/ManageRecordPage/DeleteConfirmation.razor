@@ -2,16 +2,16 @@
 
 <div class="card">
     <h3>Confirm Deletion?</h3>
-
-    <button>Yes</button>
+    <button @onclick="() => ButtonClick(true)">Yes, delete</button>
+    <button @onclick="() => ButtonClick(false)">No, don't delete</button>
 </div>
 
 @code {
     [Parameter]
     public EventCallback<bool> ConfirmChange { get; set; }
 
-    private async Task ButtonClick()
+    private async Task ButtonClick(bool confirmed)
     {
-        //TODO: Implement event call back
+        await ConfirmChange.InvokeAsync(confirmed);
     }
 }

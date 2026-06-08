@@ -1,15 +1,23 @@
 ﻿@using Models;
 @using Services;
 @inject IAlbumService _albumService
+@inject NavigationManager _navigationManager
 @rendermode InteractiveServer
 
-<button @onclick="HandleDeletion">🗑️</button>
-
-@if (isDeleted)
+@if (showConfirmation)
 {
-    <p>Album was deleted</p>
+    <DeleteConfirmation ConfirmChange="ResolveDeletion"></DeleteConfirmation>
 }
-else if (!isDeleted && isClicked)
+else if (isNavigating)
+{
+    <p>Success! Navigating back to records page...</p>
+}
+else
+{
+    <button @onclick="InitialiseDeletion">🗑️</button>
+}
+
+@if (!isDeleted && isClicked && !showConfirmation)
 {
     <p>Failed to delete. Please try again later or refresh</p>
 }
@@ -18,24 +26,46 @@ else if (!isDeleted && isClicked)
     [Parameter]
     public int Id { get; set; }
 
+    private bool showConfirmation = false;
     private bool isDeleted = false;
     private bool isClicked = false;
+    private bool isNavigating = false;
 
-    private async Task HandleDeletion()
+    private void InitialiseDeletion()
     {
-        isDeleted = false;
-        isClicked = true;
+        showConfirmation = true;
+    }
 
-        try
+    private async Task ResolveDeletion(bool confirmed)
+    {
+        showConfirmation = false;
+
+        if (confirmed)
         {
-            await _albumService.DeleteAlbumAsync(Id);
-
             isClicked = true;
-            isDeleted = true;
+            try
+            {
+                await _albumService.DeleteAlbumAsync(Id);
+                isDeleted = true;
+                isNavigating = true;
+
+                StateHasChanged();
+
+                await Task.Delay(2000);
+
+                _navigationManager.NavigateTo("/records");
+            }
+            catch (Exception)
+            {
+                isDeleted = false;
+                isNavigating = false;
+            }
         }
-        catch (Exception)
+        else
         {
+            isClicked = false;
             isDeleted = false;
+            isNavigating = false;
         }
     }
 }
