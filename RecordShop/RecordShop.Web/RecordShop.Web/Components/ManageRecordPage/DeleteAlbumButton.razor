@@ -3,39 +3,14 @@
 @inject IAlbumService _albumService
 @rendermode InteractiveServer
 
-<button @onclick="HandleDeletion">🗑️</button>
-
-@if (isDeleted)
-{
-    <p>Album was deleted</p>
-}
-else if (!isDeleted && isClicked)
-{
-    <p>Failed to delete. Please try again later or refresh</p>
-}
+<button @onclick="InitialiseDeletion">🗑️</button>
 
 @code {
     [Parameter]
     public int Id { get; set; }
 
-    private bool isDeleted = false;
-    private bool isClicked = false;
-
-    private async Task HandleDeletion()
+    private void InitialiseDeletion()
     {
-        isDeleted = false;
-        isClicked = true;
-
-        try
-        {
-            await _albumService.DeleteAlbumAsync(Id);
-
-            isClicked = true;
-            isDeleted = true;
-        }
-        catch (Exception)
-        {
-            isDeleted = false;
-        }
+        
     }
 }
