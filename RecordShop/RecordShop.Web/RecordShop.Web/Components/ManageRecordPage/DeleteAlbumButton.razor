@@ -7,7 +7,7 @@
 
 @if (showConfirmation)
 {
-    <DeleteConfirmation ></DeleteConfirmation>
+    <DeleteConfirmation ConfirmChange="ResolveDeletion"></DeleteConfirmation>
 }
 
 @code {
@@ -19,5 +19,21 @@
     private void InitialiseDeletion()
     {
         showConfirmation = true;
+    }
+
+    private async Task ResolveDeletion(bool confirmed)
+    {
+        showConfirmation = false;
+
+        if (confirmed)
+        {
+            try
+            {
+                await _albumService.DeleteAlbumAsync(id);
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }
