@@ -1,6 +1,7 @@
 ﻿@using Models;
 @using Services;
 @inject IAlbumService _albumService
+@inject NavigationManager _navigationManager
 @rendermode InteractiveServer
 
 @if (showConfirmation)
@@ -45,6 +46,8 @@ else if (!isDeleted && isClicked && !showConfirmation)
             {
                 await _albumService.DeleteAlbumAsync(Id);
                 isDeleted = true;
+
+                _navigationManager.NavigateTo("/records");
             }
             catch (Exception)
             {
