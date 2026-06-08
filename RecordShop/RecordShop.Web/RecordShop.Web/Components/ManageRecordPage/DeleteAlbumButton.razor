@@ -15,6 +15,8 @@
     public int Id { get; set; }
 
     private bool showConfirmation = false;
+    private bool isDeleted = false;
+    private bool isClicked = false;
 
     private void InitialiseDeletion()
     {
@@ -27,13 +29,21 @@
 
         if (confirmed)
         {
+            isClicked = true;
             try
             {
-                await _albumService.DeleteAlbumAsync(id);
+                await _albumService.DeleteAlbumAsync(Id);
+                isDeleted = true;
             }
             catch (Exception)
             {
+                isDeleted = false;
             }
+        }
+        else
+        {
+            isClicked = false;
+            isDeleted = false;
         }
     }
 }
