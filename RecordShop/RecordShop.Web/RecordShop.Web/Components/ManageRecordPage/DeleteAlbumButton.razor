@@ -5,12 +5,19 @@
 
 <button @onclick="InitialiseDeletion">🗑️</button>
 
+@if (showConfirmation)
+{
+    <DeleteConfirmation ></DeleteConfirmation>
+}
+
 @code {
     [Parameter]
     public int Id { get; set; }
 
+    private bool showConfirmation = false;
+
     private void InitialiseDeletion()
     {
-        
+        showConfirmation = true;
     }
 }
