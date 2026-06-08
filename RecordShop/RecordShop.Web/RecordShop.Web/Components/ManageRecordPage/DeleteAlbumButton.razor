@@ -3,11 +3,13 @@
 @inject IAlbumService _albumService
 @rendermode InteractiveServer
 
-<button @onclick="InitialiseDeletion">🗑️</button>
-
 @if (showConfirmation)
 {
     <DeleteConfirmation ConfirmChange="ResolveDeletion"></DeleteConfirmation>
+}
+else
+{
+    <button @onclick="InitialiseDeletion">🗑️</button>
 }
 
 @if (isDeleted)
