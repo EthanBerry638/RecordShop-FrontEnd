@@ -8,6 +8,10 @@
 {
     <DeleteConfirmation ConfirmChange="ResolveDeletion"></DeleteConfirmation>
 }
+else if (isNavigating)
+{
+    <p>Success! Navigating back to records page...</p>
+}
 else
 {
     <button @onclick="InitialiseDeletion">🗑️</button>
@@ -25,6 +29,7 @@ else
     private bool showConfirmation = false;
     private bool isDeleted = false;
     private bool isClicked = false;
+    private bool isNavigating = false;
 
     private void InitialiseDeletion()
     {
@@ -42,18 +47,25 @@ else
             {
                 await _albumService.DeleteAlbumAsync(Id);
                 isDeleted = true;
+                isNavigating = true;
+
+                StateHasChanged();
+
+                await Task.Delay(2000);
 
                 _navigationManager.NavigateTo("/records");
             }
             catch (Exception)
             {
                 isDeleted = false;
+                isNavigating = false;
             }
         }
         else
         {
             isClicked = false;
             isDeleted = false;
+            isNavigating = false;
         }
     }
 }
