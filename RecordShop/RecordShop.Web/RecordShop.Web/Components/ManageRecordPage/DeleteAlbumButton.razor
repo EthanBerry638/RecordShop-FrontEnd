@@ -13,11 +13,7 @@ else
     <button @onclick="InitialiseDeletion">🗑️</button>
 }
 
-@if (isDeleted)
-{
-    <p>Album was deleted</p>
-}
-else if (!isDeleted && isClicked && !showConfirmation)
+@if (!isDeleted && isClicked && !showConfirmation)
 {
     <p>Failed to delete. Please try again later or refresh</p>
 }
