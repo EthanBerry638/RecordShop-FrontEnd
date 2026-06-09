@@ -4,7 +4,21 @@
 @inject IAlbumService _albumService
 @rendermode InteractiveServer
 
-@if (!isProcessing)
+@if (isSaved)
+{
+    <h3>Success! @Album!.Title saved successfully:</h3>
+    <RecordSummary Album="Album" />
+}
+else if (postError)
+{
+    <p>There was an error saving the record. Please try again.</p>
+}
+else if (isProcessing)
+{
+    <p>Saving record @Album!.Title...</p>
+    <Spinner Color="SpinnerColor.Primary"/>
+}
+else
 {
     <h3>Enter Details Below To Add A Record</h3>
 
@@ -46,16 +60,6 @@
         </div>
 
     </EditForm>
-}
-else
-{
-    <p>Saving record @Album!.Title...</p>
-    <Spinner Color="SpinnerColor.Primary"/>
-}
-
-@if(postError)
-{
-    <p>There was an error saving the album. Please try again.</p>
 }
 
 @code {
