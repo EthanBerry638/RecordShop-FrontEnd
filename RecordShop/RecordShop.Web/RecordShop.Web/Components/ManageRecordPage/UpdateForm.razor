@@ -7,13 +7,13 @@
 @if (AlbumToUpdate != null)
 {
     <EditForm Model="AlbumToUpdate" OnValidSubmit="HandleSave" FormName="EditAlbumForm">
-    <DataAnnotationsValidator/>
-    <ValidationSummary/>
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
         <div>
             <label>
                 Title: 
-                <InputText @bind-Value="AlbumToUpdate.Title"/>
+                <InputText @bind-Value="AlbumToUpdate.Title" />
             </label>
         </div>
 
@@ -38,25 +38,13 @@
             </label>
         </div>
 
-        <div>
-            <button type="submit">Click to save changes</button>
-        </div>
-
+        <button type="submit">Save Changes</button>
     </EditForm>
 }
 
-@if (replaceAlbumError)
+@if (error != null)
 {
-    <p>Failed to replace album. Please try again later</p>
-}
-else if (noChangesDetected)
-{
-   <p>No changes were detected so @AlbumToUpdate!.Title was not changed</p>
-}
-else if (showSuccess)
-{
-    <h3>Success! Updated Record:</h3>
-    <RecordSummary Album="AlbumToUpdate"></RecordSummary>
+    <p>@error</p>
 }
 
 @code {
@@ -67,18 +55,12 @@ else if (showSuccess)
     public EventCallback<Album> OnAlbumUpdated { get; set; }
 
     private Album? originalAlbum;
-    private bool replaceAlbumError = false;
-    private bool showSuccess = false;
-    private bool noChangesDetected = false;
+    private string? error;
 
     protected override void OnParametersSet()
     {
         if (AlbumToUpdate != null)
         {
-            replaceAlbumError = false;
-            showSuccess = false;
-            noChangesDetected = false;
-
             originalAlbum = new Album
             {
                 Title = AlbumToUpdate.Title,
@@ -86,45 +68,33 @@ else if (showSuccess)
                 ReleaseDate = AlbumToUpdate.ReleaseDate,
                 Price = AlbumToUpdate.Price
             };
+            error = null;
         }
     }
 
-    protected async Task HandleSave()
+    private async Task HandleSave()
     {
-        replaceAlbumError = false;
-        showSuccess = false;
-        noChangesDetected = false;
+        error = null;
 
-        if (AlbumToUpdate?.Title == originalAlbum?.Title &&
-            AlbumToUpdate?.Description == originalAlbum?.Description &&
-            AlbumToUpdate?.ReleaseDate == originalAlbum?.ReleaseDate &&
-            AlbumToUpdate?.Price == originalAlbum?.Price
-        )
+        if (!HasChanges())
         {
-            noChangesDetected = true;
-            showSuccess = false;
             return;
         }
 
-        if (AlbumToUpdate != null)
+        try
         {
-            try
-            {
-                await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, AlbumToUpdate!.Id);
-
-                showSuccess = true;
-
-                originalAlbum!.Title = AlbumToUpdate.Title;
-                originalAlbum!.Description = AlbumToUpdate.Description;
-                originalAlbum.ReleaseDate = AlbumToUpdate.ReleaseDate;
-                originalAlbum.Price = AlbumToUpdate.Price;
-
-                await OnAlbumUpdated.InvokeAsync(AlbumToUpdate);
-            }
-            catch
-            {
-                replaceAlbumError = true;
-            }
+            await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, AlbumToUpdate!.Id);
+            await OnAlbumUpdated.InvokeAsync(AlbumToUpdate);
+        }
+        catch
+        {
+            error = "Failed to save album. Please try again later.";
         }
     }
+
+    private bool HasChanges() =>
+        AlbumToUpdate?.Title != originalAlbum?.Title ||
+        AlbumToUpdate?.Description != originalAlbum?.Description ||
+        AlbumToUpdate?.ReleaseDate != originalAlbum?.ReleaseDate ||
+        AlbumToUpdate?.Price != originalAlbum?.Price;
 }
