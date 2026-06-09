@@ -1,56 +1,67 @@
 ﻿@using Models;
 @using Services;
+@using RecordShop.Web.Components.Shared;
+@inject NavigationManager _navigationManager
 @inject IAlbumService _albumService
 @rendermode InteractiveServer
 
-<h3>Enter Details Below To Add A Record</h3>
-
-<EditForm Model="Album" OnValidSubmit="HandleSave" FormName="AddAlbumForm">
-
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <ValidationSummary></ValidationSummary>
-
-    <div>
-        <label>
-            Title:
-            <input type="text" @bind-value="Album!.Title"/>
-        </label>
-    </div>
-
-    <div>
-        <label>
-            Description:
-            <input type="text" @bind-value="Album!.Description" />
-        </label>
-    </div>
-
-    <div>
-        <label>
-            Release Date:
-            <input type="date" @bind-value="Album.ReleaseDate" />
-        </label>
-    </div>
-
-    <div>
-        <label>
-            Price:
-            <input type="number" @bind-value="Album.Price" />
-        </label>
-    </div>
-
-    <div>
-        <button type="submit">Click to save changes</button>
-    </div>
-
-</EditForm>
-
-@if(postError)
+@if (isSaved)
 {
-    <p>Failed to add album. Please try again later</p>
+    <h3>Success! @Album!.Title saved successfully:</h3>
+    <RecordSummary Album="Album" />
+    <p>Navigating back to records...</p>
 }
-else if (!postError && isPosted)
+else if (postError)
 {
-    <AddedRecordSummary Album="Album"></AddedRecordSummary>
+    <p>There was an error saving the record. Please try again.</p>
+}
+else if (isProcessing)
+{
+    <p>Saving record @Album!.Title...</p>
+    <Spinner Color="SpinnerColor.Primary"/>
+}
+else
+{
+    <h3>Enter Details Below To Add A Record</h3>
+
+    <EditForm Model="Album" OnValidSubmit="HandleSave" FormName="AddAlbumForm">
+
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div>
+            <label>
+                Title:
+                <input type="text" @bind-value="Album!.Title"/>
+            </label>
+        </div>
+
+        <div>
+            <label>
+                Description:
+                <input type="text" @bind-value="Album!.Description" />
+            </label>
+        </div>
+
+        <div>
+            <label>
+                Release Date:
+                <input type="date" @bind-value="Album.ReleaseDate" />
+            </label>
+        </div>
+
+        <div>
+            <label>
+                Price:
+                <input type="number" @bind-value="Album.Price" />
+            </label>
+        </div>
+
+        <div>
+            <button type="submit">Click to save changes</button>
+        </div>
+
+    </EditForm>
 }
 
 @code {
@@ -58,7 +69,8 @@ else if (!postError && isPosted)
     private Album? Album { get; set; }
 
     private bool postError = false;
-    private bool isPosted = false;
+    private bool isProcessing = false;
+    private bool isSaved = false;
 
     protected override void OnInitialized()
     {
@@ -67,8 +79,9 @@ else if (!postError && isPosted)
 
     private async Task HandleSave()
     {
+        isProcessing = true;
         postError = false;
-        isPosted = false;
+        isSaved = false;
 
         if (Album != null)
         {
@@ -77,16 +90,22 @@ else if (!postError && isPosted)
                 await _albumService.AddAlbumAsync(Album);
 
                 postError = false;
-                isPosted = true;
+                isProcessing = false;
+                isSaved = true;
+                StateHasChanged();
+                await Task.Delay(2000);
+                _navigationManager.NavigateTo("/records");
             }
             catch(Exception)
             {
                 postError = true;
+                isProcessing = false;
             }
         }
         else
         {
             postError = true;
+            isProcessing = false;
         }
     }
 }

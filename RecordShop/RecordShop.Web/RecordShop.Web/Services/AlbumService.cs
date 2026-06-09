@@ -2,11 +2,24 @@
 
 namespace RecordShop.Web.Services
 {
-    public class AlbumService (HttpClient httpClient) : IAlbumService
+    public class AlbumService(HttpClient httpClient, IConfiguration configuration) : IAlbumService
     {
         private readonly HttpClient _httpClient = httpClient;
+        private readonly string _baseApiUrl = GetBaseApiUrl(configuration);
 
-        private const string _baseApiUrl = "https://localhost:7091/api/Album";
+        private static string GetBaseApiUrl(IConfiguration configuration)
+        {
+            var baseUrl = configuration["RecordShopApi:BaseUrl"];
+            var albumsExtension = configuration["RecordShopApi:AlbumsEndpointsExtension"];
+
+            if (string.IsNullOrEmpty(baseUrl) || string.IsNullOrEmpty(albumsExtension))
+            {
+                throw new InvalidOperationException(
+                    "RecordShopApi:BaseUrl and RecordShopApi:AlbumsEndpointsExtension must be configured in appsettings.json");
+            }
+
+            return $"{baseUrl}{albumsExtension}";
+        }
 
         public async Task<List<Album>?> GetAllAlbumsAsync()
         {
