@@ -78,6 +78,9 @@
 
         if (!HasChanges())
         {
+            error = "No changes detected, please update something";
+            await Task.Delay(2000);
+            error = null;
             return;
         }
 
