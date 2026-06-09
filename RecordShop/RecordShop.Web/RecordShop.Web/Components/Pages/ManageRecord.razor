@@ -20,9 +20,15 @@ else if (album == null)
     <Spinner Color="SpinnerColor.Primary" />
 }
 else
-{
+{   
     <RecordSummary Album="album"></RecordSummary>
     <EditRecord Id="Id" Album="album" OnAlbumUpdated="HandleAlbumUpdated"></EditRecord>
+
+    @if (showSuccess)
+    {
+        <h3>Success! Updated Record:</h3>
+        <RecordSummary Album="album"></RecordSummary>
+    }
 }
 
 @code {
@@ -31,11 +37,13 @@ else
 
     private Album? album = null;
     private bool loadError = false;
+    private bool showSuccess = false;
 
     protected override async Task OnParametersSetAsync()
     {
         album = null;
         loadError = false;
+        showSuccess = false;
 
         try
         {
@@ -56,7 +64,9 @@ else
             album.Description = updatedAlbum.Description;
             album.ReleaseDate = updatedAlbum.ReleaseDate;
             album.Price = updatedAlbum.Price;
+            showSuccess = true;
         }
+
         return Task.CompletedTask;
     }
 }
