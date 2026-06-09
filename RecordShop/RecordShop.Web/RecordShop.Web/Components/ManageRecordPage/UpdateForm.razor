@@ -38,7 +38,7 @@
             </label>
         </div>
 
-        <button type="submit">Save Changes</button>
+        <button type="submit" disabled="@isProcessing">Save Changes</button>
     </EditForm>
 }
 
@@ -56,6 +56,7 @@
 
     private Album? originalAlbum;
     private string? error;
+    private bool isProcessing = false;
 
     protected override void OnParametersSet()
     {
@@ -75,12 +76,14 @@
     private async Task HandleSave()
     {
         error = null;
+        isProcessing = true;
 
         if (!HasChanges())
         {
             error = "No changes detected, please update something";
             await Task.Delay(2000);
             error = null;
+            isProcessing = false;
             return;
         }
 
@@ -88,10 +91,12 @@
         {
             await _albumService.ReplaceAlbumByIdAsync(AlbumToUpdate!, AlbumToUpdate!.Id);
             await OnAlbumUpdated.InvokeAsync(AlbumToUpdate);
+            isProcessing = false;
         }
         catch
         {
             error = "Failed to save album. Please try again later.";
+            isProcessing = false;
         }
     }
 

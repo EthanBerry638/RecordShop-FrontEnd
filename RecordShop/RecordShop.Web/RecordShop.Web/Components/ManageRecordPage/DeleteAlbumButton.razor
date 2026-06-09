@@ -14,7 +14,7 @@ else if (isNavigating)
 }
 else
 {
-    <button @onclick="InitialiseDeletion">🗑️</button>
+    <button @onclick="InitialiseDeletion" disabled="@isProcessing">🗑️</button>
 }
 
 @if (!isDeleted && isClicked && !showConfirmation)
@@ -30,6 +30,7 @@ else
     private bool isDeleted = false;
     private bool isClicked = false;
     private bool isNavigating = false;
+    private bool isProcessing = false;
 
     private void InitialiseDeletion()
     {
@@ -39,6 +40,7 @@ else
     private async Task ResolveDeletion(bool confirmed)
     {
         showConfirmation = false;
+        isProcessing = true;
 
         if (confirmed)
         {
@@ -59,6 +61,7 @@ else
             {
                 isDeleted = false;
                 isNavigating = false;
+                isProcessing = false;
             }
         }
         else
@@ -66,6 +69,7 @@ else
             isClicked = false;
             isDeleted = false;
             isNavigating = false;
+            isProcessing = false;
         }
     }
 }
