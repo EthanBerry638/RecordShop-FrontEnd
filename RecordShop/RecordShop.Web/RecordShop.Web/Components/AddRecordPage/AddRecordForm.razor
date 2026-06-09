@@ -1,6 +1,7 @@
 ﻿@using Models;
 @using Services;
 @using RecordShop.Web.Components.Shared;
+@inject NavigationManager _navigationManager
 @inject IAlbumService _albumService
 @rendermode InteractiveServer
 
@@ -8,6 +9,7 @@
 {
     <h3>Success! @Album!.Title saved successfully:</h3>
     <RecordSummary Album="Album" />
+    <p>Navigating back to records...</p>
 }
 else if (postError)
 {
@@ -90,6 +92,9 @@ else
                 postError = false;
                 isProcessing = false;
                 isSaved = true;
+                StateHasChanged();
+                await Task.Delay(2000);
+                _navigationManager.NavigateTo("/records");
             }
             catch(Exception)
             {
