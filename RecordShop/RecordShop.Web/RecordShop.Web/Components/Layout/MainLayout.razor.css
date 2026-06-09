@@ -12,6 +12,22 @@ main {
     background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
 }
 
+.nav-sidebar {
+    width: 160px;
+}
+
+@media (min-width: 768px) {
+    .nav-sidebar {
+        width: 160px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .nav-sidebar {
+        width: 120px;
+    }
+}
+
 .top-row {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
