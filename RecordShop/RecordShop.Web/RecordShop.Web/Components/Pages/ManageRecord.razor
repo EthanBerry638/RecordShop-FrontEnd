@@ -22,7 +22,7 @@ else if (album == null)
 else
 {
     <RecordSummary Album="album"></RecordSummary>
-    <EditRecord Id="Id" Album="album"></EditRecord>
+    <EditRecord Id="Id" Album="album" OnAlbumUpdated="HandleAlbumUpdated"></EditRecord>
 }
 
 @code {
@@ -40,13 +40,23 @@ else
         try
         {
             var response = await _albumService.GetAlbumByIdAsync(Id);
-
-            loadError = false;
             album = response;
         }
         catch (Exception)
         {
             loadError = true;
         }
+    }
+
+    private Task HandleAlbumUpdated(Album updatedAlbum)
+    {
+        if (album != null)
+        {
+            album.Title = updatedAlbum.Title;
+            album.Description = updatedAlbum.Description;
+            album.ReleaseDate = updatedAlbum.ReleaseDate;
+            album.Price = updatedAlbum.Price;
+        }
+        return Task.CompletedTask;
     }
 }
