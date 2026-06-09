@@ -63,6 +63,9 @@ else if (showSuccess)
     [Parameter]
     public Album? AlbumToUpdate { get; set; }
 
+    [Parameter]
+    public EventCallback<Album> OnAlbumUpdated { get; set; }
+
     private Album? originalAlbum;
     private bool replaceAlbumError = false;
     private bool showSuccess = false;
@@ -72,6 +75,10 @@ else if (showSuccess)
     {
         if (AlbumToUpdate != null)
         {
+            replaceAlbumError = false;
+            showSuccess = false;
+            noChangesDetected = false;
+
             originalAlbum = new Album
             {
                 Title = AlbumToUpdate.Title,
@@ -111,6 +118,8 @@ else if (showSuccess)
                 originalAlbum!.Description = AlbumToUpdate.Description;
                 originalAlbum.ReleaseDate = AlbumToUpdate.ReleaseDate;
                 originalAlbum.Price = AlbumToUpdate.Price;
+
+                await OnAlbumUpdated.InvokeAsync(AlbumToUpdate);
             }
             catch
             {
