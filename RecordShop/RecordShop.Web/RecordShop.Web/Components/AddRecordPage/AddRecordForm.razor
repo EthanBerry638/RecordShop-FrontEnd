@@ -4,61 +4,53 @@
 @inject IAlbumService _albumService
 @rendermode InteractiveServer
 
-<h3>Enter Details Below To Add A Record</h3>
+@if (!isProcessing)
+{
+    <h3>Enter Details Below To Add A Record</h3>
 
-<EditForm Model="Album" OnValidSubmit="HandleSave" FormName="AddAlbumForm">
+    <EditForm Model="Album" OnValidSubmit="HandleSave" FormName="AddAlbumForm">
 
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <ValidationSummary></ValidationSummary>
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
 
-    <div>
-        <label>
-            Title:
-            <input type="text" @bind-value="Album!.Title"/>
-        </label>
-    </div>
+        <div>
+            <label>
+                Title:
+                <input type="text" @bind-value="Album!.Title"/>
+            </label>
+        </div>
 
-    <div>
-        <label>
-            Description:
-            <input type="text" @bind-value="Album!.Description" />
-        </label>
-    </div>
+        <div>
+            <label>
+                Description:
+                <input type="text" @bind-value="Album!.Description" />
+            </label>
+        </div>
 
-    <div>
-        <label>
-            Release Date:
-            <input type="date" @bind-value="Album.ReleaseDate" />
-        </label>
-    </div>
+        <div>
+            <label>
+                Release Date:
+                <input type="date" @bind-value="Album.ReleaseDate" />
+            </label>
+        </div>
 
-    <div>
-        <label>
-            Price:
-            <input type="number" @bind-value="Album.Price" />
-        </label>
-    </div>
+        <div>
+            <label>
+                Price:
+                <input type="number" @bind-value="Album.Price" />
+            </label>
+        </div>
 
-    <div>
-        <button type="submit" disabled="@isProcessing">Click to save changes</button>
-    </div>
+        <div>
+            <button type="submit" disabled="@isProcessing">Click to save changes</button>
+        </div>
 
-</EditForm>
+    </EditForm>
+}
 
 @if(postError)
 {
     <p>There was an error saving the album. Please try again.</p>
-}
-
-@if (isProcessing)
-{
-    <p>Saving album...</p>
-    <Spinner Color="SpinnerColor.Primary" />
-}
-else
-{
-    <h3>Success! Record saved:</h3>
-    <RecordSummary Album="Album"></RecordSummary>
 }
 
 @code {
@@ -67,6 +59,7 @@ else
 
     private bool postError = false;
     private bool isProcessing = false;
+    private bool isSaved = false;
 
     protected override void OnInitialized()
     {
@@ -77,6 +70,7 @@ else
     {
         isProcessing = true;
         postError = false;
+        isSaved = false;
 
         if (Album != null)
         {
@@ -86,6 +80,7 @@ else
 
                 postError = false;
                 isProcessing = false;
+                isSaved = false;
             }
             catch(Exception)
             {
