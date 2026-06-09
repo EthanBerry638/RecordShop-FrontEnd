@@ -1,5 +1,8 @@
 ﻿@using RecordShop.Web.Components.ManageRecordPage
 @using RecordShop.Web.Components.Shared
+@using Models
+@using Services
+@inject IAlbumService _albumService
 @rendermode InteractiveServer
 @page "/records/{Id:int}"
 
@@ -7,12 +10,49 @@
 
 <h3>Record: </h3>
 
-<RecordLoaderById Id="Id" Context="album">
+@if(loadError)
+{
+    <p>Failed to load record data. Please try again later.</p>
+}
+else if (album == null)
+{
+    <h2>Fetching Data...</h2>
+    <Spinner Color="SpinnerColor.Primary" />
+}
+else
+{
     <RecordSummary Album="album"></RecordSummary>
     <EditRecord Id="Id" Album="album"></EditRecord>
-</RecordLoaderById>
+}
 
 @code {
     [Parameter]
     public int Id { get; set; }
+
+    private Album? album = null;
+    private bool loadError = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        album = null;
+        loadError = false;
+
+        try
+        {
+            var response = await _albumService.GetAlbumByIdAsync(Id);
+
+            if (response != null)
+            {
+                album = response;
+            }
+            else
+            {
+                loadError = true;
+            }
+        }
+        catch (Exception)
+        {
+            loadError = true;
+        }
+    }
 }
