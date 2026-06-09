@@ -1,5 +1,8 @@
 ﻿@using RecordShop.Web.Components.ManageRecordPage
 @using RecordShop.Web.Components.Shared
+@using Models
+@using Services
+@inject IAlbumService _albumService
 @rendermode InteractiveServer
 @page "/records/{Id:int}"
 
@@ -7,12 +10,65 @@
 
 <h3>Record: </h3>
 
-<RecordLoaderById Id="Id" Context="album">
+@if(loadError)
+{
+    <p>Failed to load record data. Please try again later.</p>
+}
+else if (album == null)
+{
+    <h2>Fetching Data...</h2>
+    <Spinner Color="SpinnerColor.Primary" />
+}
+else
+{   
     <RecordSummary Album="album"></RecordSummary>
-    <EditRecord Id="Id" Album="album"></EditRecord>
-</RecordLoaderById>
+    <EditRecord Id="Id" Album="album" OnAlbumUpdated="HandleAlbumUpdated"></EditRecord>
+
+    @if (showSuccess)
+    {
+        <h3>Success! Updated Record:</h3>
+        <RecordSummary Album="album"></RecordSummary>
+    }
+}
 
 @code {
     [Parameter]
     public int Id { get; set; }
+
+    private Album? album = null;
+    private bool loadError = false;
+    private bool showSuccess = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        album = null;
+        loadError = false;
+        showSuccess = false;
+
+        try
+        {
+            var response = await _albumService.GetAlbumByIdAsync(Id);
+            album = response;
+        }
+        catch (Exception)
+        {
+            loadError = true;
+            album = null;
+        }
+    }
+
+    private async Task HandleAlbumUpdated(Album updatedAlbum)
+    {
+        if (album != null)
+        {
+            album.Title = updatedAlbum.Title;
+            album.Description = updatedAlbum.Description;
+            album.ReleaseDate = updatedAlbum.ReleaseDate;
+            album.Price = updatedAlbum.Price;
+            showSuccess = true;
+
+            await Task.Delay(3000);
+            showSuccess = false;
+        }
+    }
 }
