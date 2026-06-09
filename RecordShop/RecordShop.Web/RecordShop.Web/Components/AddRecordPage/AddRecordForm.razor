@@ -40,18 +40,24 @@
     </div>
 
     <div>
-        <button type="submit">Click to save changes</button>
+        <button type="submit" disabled="@isProcessing">Click to save changes</button>
     </div>
 
 </EditForm>
 
 @if(postError)
 {
-    <p>Failed to add album. Please try again later</p>
+    <p>There was an error saving the album. Please try again.</p>
 }
-else if (!postError && isPosted)
+
+@if (isProcessing)
 {
-    <h3>Success! Saved album:</h3>
+    <p>Saving album...</p>
+    <Spinner Color="SpinnerColor.Primary" />
+}
+else
+{
+    <h3>Success! Record saved:</h3>
     <RecordSummary Album="Album"></RecordSummary>
 }
 
@@ -60,7 +66,7 @@ else if (!postError && isPosted)
     private Album? Album { get; set; }
 
     private bool postError = false;
-    private bool isPosted = false;
+    private bool isProcessing = false;
 
     protected override void OnInitialized()
     {
@@ -69,8 +75,8 @@ else if (!postError && isPosted)
 
     private async Task HandleSave()
     {
+        isProcessing = true;
         postError = false;
-        isPosted = false;
 
         if (Album != null)
         {
@@ -79,7 +85,7 @@ else if (!postError && isPosted)
                 await _albumService.AddAlbumAsync(Album);
 
                 postError = false;
-                isPosted = true;
+                isProcessing = false;
             }
             catch(Exception)
             {
