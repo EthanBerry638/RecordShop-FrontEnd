@@ -42,7 +42,7 @@
         </div>
 
         <div>
-            <button type="submit" disabled="@isProcessing">Click to save changes</button>
+            <button type="submit">Click to save changes</button>
         </div>
 
     </EditForm>
@@ -85,16 +85,18 @@ else
 
                 postError = false;
                 isProcessing = false;
-                isSaved = false;
+                isSaved = true;
             }
             catch(Exception)
             {
                 postError = true;
+                isProcessing = false;
             }
         }
         else
         {
             postError = true;
+            isProcessing = false;
         }
     }
 }
