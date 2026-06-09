@@ -20,8 +20,4 @@ Framework: Blazor
 
 ## Roadmap 🛣️
 
-Implement delete confirmation
-
-Add more custom styling
-
 Add testing
