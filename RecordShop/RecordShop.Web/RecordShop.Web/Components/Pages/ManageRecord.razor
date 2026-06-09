@@ -41,14 +41,8 @@ else
         {
             var response = await _albumService.GetAlbumByIdAsync(Id);
 
-            if (response != null)
-            {
-                album = response;
-            }
-            else
-            {
-                loadError = true;
-            }
+            loadError = false;
+            album = response;
         }
         catch (Exception)
         {
