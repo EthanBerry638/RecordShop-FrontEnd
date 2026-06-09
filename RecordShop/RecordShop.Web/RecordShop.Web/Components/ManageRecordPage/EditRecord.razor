@@ -2,7 +2,7 @@
 
 <div class="card">
     <DeleteAlbumButton Id="Id"></DeleteAlbumButton>
-    <UpdateForm AlbumToUpdate="Album"></UpdateForm>
+    <UpdateForm AlbumToUpdate="Album" OnAlbumUpdated="PassUpdatedAlbum"></UpdateForm>
 </div>
 
 @code {
@@ -11,4 +11,12 @@
 
     [Parameter]
     public int Id { get; set; }
+
+    [Parameter]
+    public EventCallback<Album> OnAlbumUpdated { get; set; }
+
+    private async Task PassUpdatedAlbum(Album updatedAlbum)
+    {
+        await OnAlbumUpdated.InvokeAsync(updatedAlbum);
+    }
 }
