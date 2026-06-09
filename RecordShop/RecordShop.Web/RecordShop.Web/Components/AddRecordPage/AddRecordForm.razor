@@ -1,5 +1,6 @@
 ﻿@using Models;
 @using Services;
+@using RecordShop.Web.Components.Shared;
 @inject IAlbumService _albumService
 @rendermode InteractiveServer
 
@@ -50,7 +51,8 @@
 }
 else if (!postError && isPosted)
 {
-    <AddedRecordSummary Album="Album"></AddedRecordSummary>
+    <h3>Success! Saved album:</h3>
+    <RecordSummary Album="Album"></RecordSummary>
 }
 
 @code {
