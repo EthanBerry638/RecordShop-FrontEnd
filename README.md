@@ -1,4 +1,4 @@
-# RecordShop Front End 💿
+# RecordShop Front End 💿 (Archived)
 
 Front end to manage a record shop integrated with my API https://github.com/EthanBerry638/RecordShop
 
